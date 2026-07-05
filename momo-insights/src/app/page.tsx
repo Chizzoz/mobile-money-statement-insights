@@ -4,6 +4,7 @@ import { DashboardView } from "@/components/Dashboard/DashboardView";
 import { DashboardSkeleton } from "@/components/Dashboard/DashboardGrid";
 import { ThemeToggle } from "@/components/Theme/ThemeToggle";
 import { FileUploader } from "@/components/Uploader/FileUploader";
+import { StatementInstructions } from "@/components/Uploader/StatementInstructions";
 import { analyzeStatement } from "@/lib/analyzers/aggregator";
 import { parsePdfFile } from "@/lib/parsers/pdfParser";
 import { parseTextStatement } from "@/lib/parsers/textParser";
@@ -93,6 +94,7 @@ export default function HomePage() {
               onTextSubmit={processText}
               isLoading={false}
             />
+            <StatementInstructions />
             {error && (
               <div className="rounded-[14px] border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
                 {error}
