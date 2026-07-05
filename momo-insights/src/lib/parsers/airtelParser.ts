@@ -7,11 +7,8 @@ import {
   parseAirtelTransactionDate,
   parseAmount,
 } from "@/utils/formatters";
-
-type RawTransaction = Omit<
-  import("@/lib/types/transaction").Transaction,
-  "category" | "dayOfWeek" | "hour"
->;
+import { detectFnbFormat, parseFnbStatement } from "@/lib/parsers/fnbParser";
+import { finalizeParseResult, type RawTransaction } from "@/lib/parsers/shared";
 
 export type StatementFormat = "detailed" | "balance" | "unknown";
 
@@ -364,54 +361,20 @@ export function parseAirtelBalanceStatement(text: string): ParseResult {
   return finalizeParseResult(metadata, transactions, "airtel");
 }
 
-/* ------------------------------------------------------------------ */
-/* Shared helpers                                                       */
-/* ------------------------------------------------------------------ */
-
-function finalizeParseResult(
-  metadata: StatementMetadata,
-  transactions: RawTransaction[],
-  provider: Provider,
-): ParseResult {
-  const warnings: string[] = [];
-
-  if (provider === "unknown" && transactions.length === 0) {
-    warnings.push(
-      "Could not detect a known statement format. Try pasting the raw text from your PDF.",
-    );
-  }
-
-  if (transactions.length === 0) {
-    warnings.push("No transactions were found in the uploaded statement.");
-  }
-
-  const parsedDebitTotal = transactions
-    .filter((t) => t.type === "Debit")
-    .reduce((sum, t) => sum + t.amount, 0);
-  const parsedCreditTotal = transactions
-    .filter((t) => t.type === "Credit")
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  if (metadata.totalDebit > 0 && Math.abs(parsedDebitTotal - metadata.totalDebit) > 1) {
-    warnings.push(
-      `Parsed debit total (${parsedDebitTotal.toFixed(2)}) differs from statement total (${metadata.totalDebit.toFixed(2)}). Some transactions may be missing.`,
-    );
-  }
-
-  if (metadata.totalCredit > 0 && Math.abs(parsedCreditTotal - metadata.totalCredit) > 1) {
-    warnings.push(
-      `Parsed credit total (${parsedCreditTotal.toFixed(2)}) differs from statement total (${metadata.totalCredit.toFixed(2)}). Some transactions may be missing.`,
-    );
-  }
-
-  return { metadata, transactions, warnings };
-}
-
 export function parseAirtelStatement(text: string): ParseResult {
   return parseAirtelDetailedStatement(text);
 }
 
+/**
+ * Single entry point used across the app. Checks for known FNB bank
+ * statement formats first, then falls back to the Airtel Money formats.
+ */
 export function parseStatementText(text: string): ParseResult {
+  const fnbFormat = detectFnbFormat(text);
+  if (fnbFormat !== "unknown") {
+    return parseFnbStatement(text, fnbFormat);
+  }
+
   const format = detectStatementFormat(text);
 
   if (format === "balance") {

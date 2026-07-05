@@ -175,8 +175,8 @@ export function StatementInstructions() {
                   service provider&apos;s app, USSD menu, or website, then upload it here.
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  MoMo Insights is tested on Airtel Money statements. Other formats may work
-                  if the layout is similar — you can also paste the raw text instead of
+                  MoMo Insights is tested on Airtel Money and FNB bank statements. Other formats
+                  may work if the layout is similar — you can also paste the raw text instead of
                   uploading a PDF.
                 </p>
               </TabsContent>

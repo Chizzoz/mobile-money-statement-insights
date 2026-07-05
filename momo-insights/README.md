@@ -1,8 +1,8 @@
 # MoMo Insights
 
-**MoMo Insights** is a privacy-first web app that analyzes mobile money statements entirely in your browser. Upload a PDF or paste statement text to get spending breakdowns, activity patterns, and personalized financial advice.
+**MoMo Insights** is a privacy-first web app that analyzes mobile money and bank statements entirely in your browser. Upload a PDF or paste statement text to get spending breakdowns, activity patterns, and personalized financial advice.
 
-> v1 is tested on **Airtel Money** statements. Other providers may work if the statement format is similar.
+> v1 is tested on **Airtel Money** and **FNB** bank statements. Other providers may work if the statement format is similar.
 
 ## Features
 
