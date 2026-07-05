@@ -102,8 +102,8 @@ export function FileUploader({ onFileSelect, onTextSubmit, isLoading }: FileUplo
         <div className="flex items-start gap-3 rounded-[14px] border border-border bg-muted p-5">
           <FileText className="mt-0.5 h-5 w-5 shrink-0 text-foreground" />
           <p className="text-sm leading-relaxed text-[var(--body-text,#3f3f3f)] dark:text-muted-foreground">
-            Copy the full text from your mobile money statement PDF and paste it below.
-            v1 is tested on Airtel Money; other formats may work if the layout is similar.
+            Copy the full text from your statement PDF and paste it below.
+            v1 is tested on Airtel Money and FNB bank statements; other formats may work if the layout is similar.
           </p>
         </div>
         <Textarea

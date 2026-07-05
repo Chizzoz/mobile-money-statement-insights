@@ -101,7 +101,7 @@ export default function HomePage() {
               </div>
             )}
             <p className="text-center text-xs text-muted-foreground sm:text-left">
-              v1 tested on Airtel Money statements. Other providers may work if the format is similar.
+              v1 tested on Airtel Money and FNB bank statements. Other providers may work if the format is similar.
             </p>
           </div>
         ) : status === "loading" ? (
