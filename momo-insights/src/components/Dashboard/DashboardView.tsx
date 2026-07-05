@@ -48,7 +48,7 @@ export function DashboardView({ analysis }: DashboardViewProps) {
         </div>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <ChartCard title="Expenditure Breakdown">
           <ExpenditurePieChart
             categoryTotals={categoryTotals}

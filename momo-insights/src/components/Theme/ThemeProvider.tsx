@@ -58,9 +58,11 @@ export function useTheme() {
 
 export function getChartTooltipStyle(isDark: boolean): React.CSSProperties {
   return {
-    background: isDark ? "hsl(222 47% 11%)" : "hsl(0 0% 100%)",
-    border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid hsl(0 0% 90%)",
-    borderRadius: "8px",
-    color: isDark ? "hsl(0 0% 98%)" : "hsl(0 0% 15%)",
+    background: isDark ? "#1a1a1a" : "#ffffff",
+    border: isDark ? "1px solid #484848" : "1px solid #dddddd",
+    borderRadius: "14px",
+    color: isDark ? "#f7f7f7" : "#222222",
+    boxShadow:
+      "rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0",
   };
 }
