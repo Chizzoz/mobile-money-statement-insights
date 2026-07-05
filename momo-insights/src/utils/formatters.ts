@@ -47,4 +47,22 @@ export function parseAirtelBalanceDateTime(dateStr: string, timeStr: string): Da
   return parse(`${dateStr.trim()} ${timeStr.trim()}`, "dd/MM/yy HH:mm", new Date());
 }
 
+/** Parses dates like "03 Jul 2026" (1- or 2-digit day, abbreviated month, full year). */
+export function parseDayMonthYear(value: string): Date {
+  return parse(value.trim(), "d MMM yyyy", new Date());
+}
+
+/** Parses dates like "7 February 2026" (1- or 2-digit day, full month name, full year). */
+export function parseFullMonthDayYear(value: string): Date {
+  return parse(value.trim(), "d MMMM yyyy", new Date());
+}
+
+/** Resolves the year for a "17 Feb" style date (no year) given the statement's period bounds. */
+export function resolveYearForDayMonth(monthIndex: number, periodFrom: Date, periodTo: Date): number {
+  const fromYear = periodFrom.getFullYear();
+  const toYear = periodTo.getFullYear();
+  if (fromYear === toYear) return fromYear;
+  return monthIndex >= periodFrom.getMonth() ? fromYear : toYear;
+}
+
 export const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

@@ -56,6 +56,11 @@ export function DashboardHeader({ metadata }: DashboardHeaderProps) {
             Airtel Money
           </div>
         )}
+        {metadata.provider === "fnb" && (
+          <div className="rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground">
+            FNB
+          </div>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

@@ -9,7 +9,7 @@ export type Category =
   | "Incoming Receipts"
   | "Other";
 
-export type Provider = "airtel" | "generic" | "unknown";
+export type Provider = "airtel" | "fnb" | "generic" | "unknown";
 
 export interface StatementMetadata {
   customerName: string;
