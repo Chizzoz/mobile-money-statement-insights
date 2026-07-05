@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { getChartTooltipStyle, useTheme } from "@/components/Theme/ThemeProvider";
 import type { Category } from "@/lib/types/transaction";
 import { CATEGORY_COLORS, SPENDING_CATEGORIES } from "@/lib/types/transaction";
 import { formatCurrency } from "@/utils/formatters";
@@ -27,6 +28,7 @@ export function CategoryBarChart({
   selectedCategory,
   onCategoryClick,
 }: CategoryBarChartProps) {
+  const { theme } = useTheme();
   const data = SPENDING_CATEGORIES.map((cat) => ({
     name: cat.replace(" / ", "\n"),
     fullName: cat,
@@ -41,28 +43,27 @@ export function CategoryBarChart({
     );
   }
 
+  const gridColor = theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)";
+  const tickColor = theme === "dark" ? "#94a3b8" : "#64748b";
+
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} layout="vertical" margin={{ left: 10, right: 20 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" horizontal={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke={gridColor} horizontal={false} />
         <XAxis
           type="number"
-          tick={{ fill: "#94a3b8", fontSize: 11 }}
+          tick={{ fill: tickColor, fontSize: 11 }}
           tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
         />
         <YAxis
           type="category"
           dataKey="name"
           width={110}
-          tick={{ fill: "#94a3b8", fontSize: 10 }}
+          tick={{ fill: tickColor, fontSize: 10 }}
         />
         <Tooltip
           formatter={(value) => formatCurrency(Number(value), currency)}
-          contentStyle={{
-            background: "hsl(222 47% 11%)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: "8px",
-          }}
+          contentStyle={getChartTooltipStyle(theme === "dark")}
         />
         <Bar
           dataKey="amount"

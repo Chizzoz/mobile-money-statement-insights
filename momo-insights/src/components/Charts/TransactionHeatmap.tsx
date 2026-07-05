@@ -14,6 +14,11 @@ function formatHour(hour: number): string {
   return `${hour - 12}pm`;
 }
 
+function heatmapColor(intensity: number): string {
+  const alpha = 0.15 + intensity * 0.85;
+  return `rgba(var(--heatmap-fill), ${alpha})`;
+}
+
 export function TransactionHeatmap({ data }: TransactionHeatmapProps) {
   const maxCount = Math.max(...data.map((d) => d.count), 1);
 
@@ -62,8 +67,8 @@ export function TransactionHeatmap({ data }: TransactionHeatmapProps) {
                   style={{
                     background:
                       count === 0
-                        ? "rgba(255,255,255,0.05)"
-                        : `rgba(99, 102, 241, ${0.15 + intensity * 0.85})`,
+                        ? "var(--heatmap-empty)"
+                        : heatmapColor(intensity),
                   }}
                 />
               );
@@ -76,7 +81,7 @@ export function TransactionHeatmap({ data }: TransactionHeatmapProps) {
             <div
               key={v}
               className="h-3 w-3 rounded-sm"
-              style={{ background: `rgba(99, 102, 241, ${0.15 + v * 0.85})` }}
+              style={{ background: heatmapColor(v) }}
             />
           ))}
           <span>More</span>

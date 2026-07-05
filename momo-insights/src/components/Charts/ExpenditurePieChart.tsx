@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { getChartTooltipStyle, useTheme } from "@/components/Theme/ThemeProvider";
 import type { Category } from "@/lib/types/transaction";
 import { CATEGORY_COLORS, SPENDING_CATEGORIES } from "@/lib/types/transaction";
 import { formatCurrency } from "@/utils/formatters";
@@ -25,6 +26,7 @@ export function ExpenditurePieChart({
   selectedCategory,
   onCategoryClick,
 }: ExpenditurePieChartProps) {
+  const { theme } = useTheme();
   const data = SPENDING_CATEGORIES.map((cat) => ({
     name: cat,
     value: categoryTotals[cat],
@@ -62,18 +64,15 @@ export function ExpenditurePieChart({
               opacity={
                 selectedCategory && selectedCategory !== entry.name ? 0.35 : 1
               }
-              stroke={selectedCategory === entry.name ? "#fff" : "none"}
+              stroke={selectedCategory === entry.name ? "currentColor" : "none"}
               strokeWidth={2}
+              className="text-foreground"
             />
           ))}
         </Pie>
         <Tooltip
           formatter={(value) => formatCurrency(Number(value), currency)}
-          contentStyle={{
-            background: "hsl(222 47% 11%)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: "8px",
-          }}
+          contentStyle={getChartTooltipStyle(theme === "dark")}
         />
         <Legend />
       </PieChart>

@@ -24,19 +24,19 @@ const SEVERITY_STYLES: Record<
   { border: string; bg: string; icon: string }
 > = {
   critical: {
-    border: "border-red-500/30",
-    bg: "bg-red-500/10",
-    icon: "text-red-400",
+    border: "border-destructive/30",
+    bg: "bg-destructive/5",
+    icon: "text-destructive",
   },
   warning: {
-    border: "border-amber-500/30",
-    bg: "bg-amber-500/10",
-    icon: "text-amber-400",
+    border: "border-border",
+    bg: "bg-muted",
+    icon: "text-foreground",
   },
   info: {
-    border: "border-indigo-500/30",
-    bg: "bg-indigo-500/10",
-    icon: "text-indigo-400",
+    border: "border-border",
+    bg: "bg-card",
+    icon: "text-primary",
   },
 };
 
@@ -46,9 +46,9 @@ interface InsightCardsProps {
 
 export function InsightCards({ insights }: InsightCardsProps) {
   return (
-    <div className="space-y-3">
-      <h3 className="text-base font-semibold">Financial Insights</h3>
-      <div className="grid gap-3 md:grid-cols-2">
+    <div className="space-y-4">
+      <h3 className="text-base font-semibold text-foreground">Financial Insights</h3>
+      <div className="grid gap-4 md:grid-cols-2">
         {insights.map((insight) => {
           const Icon = INSIGHT_ICONS[insight.type] ?? Info;
           const styles = SEVERITY_STYLES[insight.severity];
@@ -56,7 +56,7 @@ export function InsightCards({ insights }: InsightCardsProps) {
           return (
             <Card
               key={insight.type + insight.title}
-              className={`border ${styles.border} ${styles.bg} backdrop-blur-sm`}
+              className={`border ${styles.border} ${styles.bg} shadow-none ring-0`}
             >
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold">
@@ -65,7 +65,7 @@ export function InsightCards({ insights }: InsightCardsProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm leading-relaxed text-muted-foreground">
+                <p className="text-sm leading-relaxed text-[var(--body-text,#3f3f3f)] dark:text-muted-foreground">
                   {insight.message}
                 </p>
               </CardContent>

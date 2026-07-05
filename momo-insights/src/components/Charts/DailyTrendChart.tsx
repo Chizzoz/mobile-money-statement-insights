@@ -10,6 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { getChartTooltipStyle, useTheme } from "@/components/Theme/ThemeProvider";
 import type { DailyTrendPoint } from "@/lib/types/transaction";
 import { formatCurrency } from "@/utils/formatters";
 import { format, parseISO } from "date-fns";
@@ -20,6 +21,8 @@ interface DailyTrendChartProps {
 }
 
 export function DailyTrendChart({ data, currency }: DailyTrendChartProps) {
+  const { theme } = useTheme();
+
   if (data.length === 0) {
     return (
       <p className="flex h-64 items-center justify-center text-sm text-muted-foreground">
@@ -33,34 +36,33 @@ export function DailyTrendChart({ data, currency }: DailyTrendChartProps) {
     label: format(parseISO(d.date), "dd MMM"),
   }));
 
+  const gridColor = theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)";
+  const tickColor = theme === "dark" ? "#94a3b8" : "#64748b";
+
   return (
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={chartData}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+        <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
         <XAxis
           dataKey="label"
-          tick={{ fill: "#94a3b8", fontSize: 11 }}
+          tick={{ fill: tickColor, fontSize: 11 }}
           interval="preserveStartEnd"
         />
         <YAxis
-          tick={{ fill: "#94a3b8", fontSize: 11 }}
+          tick={{ fill: tickColor, fontSize: 11 }}
           tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
         />
         <Tooltip
           formatter={(value) => formatCurrency(Number(value), currency)}
           labelFormatter={(label) => String(label)}
-          contentStyle={{
-            background: "hsl(222 47% 11%)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: "8px",
-          }}
+          contentStyle={getChartTooltipStyle(theme === "dark")}
         />
         <Legend />
         <Line
           type="monotone"
           dataKey="credit"
           name="Income"
-          stroke="#22c55e"
+          stroke="#16a34a"
           strokeWidth={2}
           dot={{ r: 3 }}
         />
@@ -68,7 +70,7 @@ export function DailyTrendChart({ data, currency }: DailyTrendChartProps) {
           type="monotone"
           dataKey="debit"
           name="Expenses"
-          stroke="#ef4444"
+          stroke="#dc2626"
           strokeWidth={2}
           dot={{ r: 3 }}
         />

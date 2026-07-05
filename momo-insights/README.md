@@ -14,6 +14,10 @@
 - **Export** — download transactions as CSV or a PDF analysis report
 - **100% private** — all processing happens locally; no data leaves your device
 
+## Design
+
+The UI follows the **Airbnb design system** (Rausch `#ff385c`, Inter typography, 14px card radius). See [DESIGN.md](./DESIGN.md) for token reference. Light/dark mode toggle is supported; the default light theme matches Airbnb's marketing aesthetic.
+
 ## Tech Stack
 
 - Next.js 16 (App Router) + TypeScript

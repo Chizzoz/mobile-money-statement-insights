@@ -2,12 +2,13 @@
 
 import { DashboardView } from "@/components/Dashboard/DashboardView";
 import { DashboardSkeleton } from "@/components/Dashboard/DashboardGrid";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
 import { FileUploader } from "@/components/Uploader/FileUploader";
 import { analyzeStatement } from "@/lib/analyzers/aggregator";
 import { parsePdfFile } from "@/lib/parsers/pdfParser";
 import { parseTextStatement } from "@/lib/parsers/textParser";
 import { useStatementStore } from "@/store/useStatementStore";
-import { Lock, Sparkles } from "lucide-react";
+import { Lock } from "lucide-react";
 import { useCallback } from "react";
 
 export default function HomePage() {
@@ -54,51 +55,56 @@ export default function HomePage() {
   );
 
   return (
-    <main className="min-h-screen">
-      {/* Hero header */}
-      <header className="border-b border-white/10 bg-gradient-to-r from-indigo-950/80 via-slate-950 to-purple-950/80">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <Sparkles className="h-6 w-6 text-indigo-400" />
-                <h1 className="bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-3xl font-bold text-transparent">
-                  MoMo Insights
-                </h1>
-              </div>
-              <p className="max-w-xl text-muted-foreground">
-                Upload your mobile money statement to visualize spending, uncover patterns,
-                and get personalized financial advice.
-              </p>
+    <main className="min-h-screen bg-background">
+      <header className="sticky top-0 z-50 border-b border-border bg-background">
+        <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between gap-4 px-6 sm:px-10">
+          <div className="min-w-0">
+            <h1 className="text-[22px] font-semibold leading-tight text-foreground sm:text-[28px] sm:font-bold">
+              MoMo Insights
+            </h1>
+            <p className="hidden max-w-md truncate text-sm text-muted-foreground sm:block">
+              Mobile money statement analysis
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center gap-3">
+            <div className="hidden items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground shadow-airbnb sm:flex">
+              <Lock className="h-4 w-4 text-primary" />
+              Processed locally
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-sm text-green-300">
-              <Lock className="h-4 w-4" />
-              100% private — processed locally
-            </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1280px] px-6 py-10 sm:px-10 sm:py-16">
         {status === "idle" || status === "error" ? (
-          <div className="mx-auto max-w-2xl space-y-6">
+          <div className="mx-auto max-w-2xl space-y-8">
+            <div className="space-y-2 text-center sm:text-left">
+              <h2 className="text-[22px] font-medium leading-snug text-foreground">
+                Understand your spending
+              </h2>
+              <p className="text-base text-[var(--body-text,#3f3f3f)] dark:text-muted-foreground">
+                Upload your mobile money statement to visualize spending, uncover patterns,
+                and get personalized financial advice.
+              </p>
+            </div>
             <FileUploader
               onFileSelect={handleFileSelect}
               onTextSubmit={processText}
               isLoading={false}
             />
             {error && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
+              <div className="rounded-[14px] border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
                 {error}
               </div>
             )}
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-center text-xs text-muted-foreground sm:text-left">
               v1 tested on Airtel Money statements. Other providers may work if the format is similar.
             </p>
           </div>
         ) : status === "loading" ? (
-          <div className="space-y-6">
-            <p className="text-center text-sm text-indigo-300">{loadingMessage}</p>
+          <div className="space-y-8">
+            <p className="text-center text-base font-medium text-foreground">{loadingMessage}</p>
             <DashboardSkeleton />
           </div>
         ) : analysis ? (
