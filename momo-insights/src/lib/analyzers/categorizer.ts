@@ -11,6 +11,23 @@ const LOAN_KEYWORDS = [
 
 const AGENT_KEYWORDS = ["FIKILIZA ZM"];
 
+// Merchant names checked regardless of verb phrasing (e.g. "Paid to X" vs "Money Sent to X"),
+// since different statement templates describe merchant payments differently.
+const MERCHANT_KEYWORDS = [
+  "ZAM CASH",
+  "NFS SETTLEMENT",
+  "ZESCO",
+  "PAWA PAY",
+  "SPAR",
+  "PRIMENET",
+  "FUTURE VENTURES",
+  "SPARGRIS",
+];
+
+// Different statement templates order these words differently
+// ("Sent Money to X" vs "Money Sent to X").
+const PERSONAL_TRANSFER_PHRASES = ["SENT MONEY TO", "MONEY SENT TO"];
+
 function matchesKeywords(text: string, keywords: string[]): boolean {
   const upper = text.toUpperCase();
   return keywords.some((kw) => upper.includes(kw.toUpperCase()));
@@ -39,7 +56,8 @@ export function categorizeTransaction(
 
   if (
     matchesKeywords(desc, AGENT_KEYWORDS) ||
-    desc.includes("WITHDRAWN AT")
+    desc.includes("WITHDRAWN AT") ||
+    desc.includes("WITHDRAWN FROM")
   ) {
     return "Agent Cash-Out";
   }
@@ -48,11 +66,11 @@ export function categorizeTransaction(
     return "Airtime / Bills";
   }
 
-  if (desc.includes("PAID TO")) {
+  if (desc.includes("PAID TO") || matchesKeywords(desc, MERCHANT_KEYWORDS)) {
     return "Merchant Spending";
   }
 
-  if (desc.includes("SENT MONEY TO")) {
+  if (matchesKeywords(desc, PERSONAL_TRANSFER_PHRASES)) {
     return "Personal Transfers";
   }
 
