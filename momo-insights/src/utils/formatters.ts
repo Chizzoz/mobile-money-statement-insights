@@ -39,4 +39,12 @@ export function parseAirtelTransactionDate(value: string): Date {
   return parse(value.trim(), "dd-MM-yy h:mm a", new Date());
 }
 
+export function parseAirtelBalancePeriodDate(value: string): Date {
+  return parse(value.trim(), "dd MMM yyyy", new Date());
+}
+
+export function parseAirtelBalanceDateTime(dateStr: string, timeStr: string): Date {
+  return parse(`${dateStr.trim()} ${timeStr.trim()}`, "dd/MM/yy HH:mm", new Date());
+}
+
 export const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

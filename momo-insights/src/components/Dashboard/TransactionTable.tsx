@@ -73,8 +73,8 @@ export function TransactionTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filtered.map((txn) => (
-              <TableRow key={txn.id}>
+            {filtered.map((txn, index) => (
+              <TableRow key={`${txn.id}-${index}`}>
                 <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
                   {formatDate(txn.date)}
                 </TableCell>
