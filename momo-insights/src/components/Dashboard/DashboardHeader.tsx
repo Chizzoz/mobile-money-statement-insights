@@ -19,42 +19,42 @@ export function DashboardHeader({ metadata }: DashboardHeaderProps) {
       title: "Opening Balance",
       value: formatCurrency(metadata.openingBalance, metadata.currency),
       icon: Wallet,
-      color: "text-blue-400",
+      color: "text-primary",
     },
     {
       title: "Closing Balance",
       value: formatCurrency(metadata.closingBalance, metadata.currency),
       icon: Wallet,
-      color: "text-purple-400",
+      color: "text-foreground",
     },
     {
       title: "Total Credit",
       value: formatCurrency(metadata.totalCredit, metadata.currency),
       icon: TrendingUp,
-      color: "text-green-400",
+      color: "text-green-600 dark:text-green-400",
     },
     {
       title: "Total Debit",
       value: formatCurrency(metadata.totalDebit, metadata.currency),
       icon: TrendingDown,
-      color: "text-red-400",
+      color: "text-red-600 dark:text-red-400",
     },
   ];
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 rounded-full bg-white/5 px-4 py-1.5 text-sm">
-          <User className="h-4 w-4 text-indigo-400" />
+        <div className="flex items-center gap-2 rounded-full bg-muted px-4 py-1.5 text-sm">
+          <User className="h-4 w-4 text-primary" />
           <span className="font-medium">{metadata.customerName}</span>
           <span className="text-muted-foreground">·</span>
           <span className="text-muted-foreground">{metadata.mobileNumber}</span>
         </div>
-        <div className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs text-indigo-300">
+        <div className="rounded-full bg-primary/15 px-3 py-1 text-xs text-primary">
           {periodLabel}
         </div>
         {metadata.provider === "airtel" && (
-          <div className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted-foreground">
+          <div className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
             Airtel Money
           </div>
         )}
@@ -62,7 +62,7 @@ export function DashboardHeader({ metadata }: DashboardHeaderProps) {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
-          <Card key={card.title} className="border-white/10 bg-white/5 backdrop-blur-sm">
+          <Card key={card.title}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 {card.title}

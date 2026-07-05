@@ -61,10 +61,10 @@ export function TransactionTable({
         )}
       </div>
 
-      <ScrollArea className="h-[400px] rounded-lg border border-white/10">
+      <ScrollArea className="h-[400px] rounded-lg border border-border">
         <Table>
           <TableHeader>
-            <TableRow className="border-white/10 hover:bg-transparent">
+            <TableRow className="hover:bg-transparent">
               <TableHead>Date</TableHead>
               <TableHead>Description</TableHead>
               <TableHead>Category</TableHead>
@@ -74,7 +74,7 @@ export function TransactionTable({
           </TableHeader>
           <TableBody>
             {filtered.map((txn) => (
-              <TableRow key={txn.id} className="border-white/5">
+              <TableRow key={txn.id}>
                 <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
                   {formatDate(txn.date)}
                 </TableCell>
@@ -95,7 +95,9 @@ export function TransactionTable({
                 </TableCell>
                 <TableCell
                   className={`text-right font-medium ${
-                    txn.type === "Credit" ? "text-green-400" : "text-red-400"
+                    txn.type === "Credit"
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
                   }`}
                 >
                   {txn.type === "Credit" ? "+" : "-"}

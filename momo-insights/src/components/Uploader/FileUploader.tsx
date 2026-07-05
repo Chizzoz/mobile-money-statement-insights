@@ -34,7 +34,7 @@ export function FileUploader({ onFileSelect, onTextSubmit, isLoading }: FileUplo
 
   return (
     <Tabs defaultValue="upload" className="w-full">
-      <TabsList className="grid w-full grid-cols-2 bg-white/5">
+      <TabsList className="grid w-full grid-cols-2 bg-muted">
         <TabsTrigger value="upload">Upload PDF</TabsTrigger>
         <TabsTrigger value="paste">Paste Text</TabsTrigger>
       </TabsList>
@@ -48,49 +48,49 @@ export function FileUploader({ onFileSelect, onTextSubmit, isLoading }: FileUplo
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
           className={cn(
-            "relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-all",
+            "relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-10 transition-colors",
             isDragging
-              ? "border-indigo-400 bg-indigo-500/10"
-              : "border-white/20 bg-white/5 hover:border-indigo-400/50 hover:bg-white/10",
+              ? "border-primary bg-accent"
+              : "border-border bg-muted/50 hover:border-primary hover:bg-accent/50",
           )}
         >
           {isLoading ? (
             <>
-              <Loader2 className="mb-4 h-12 w-12 animate-spin text-indigo-400" />
+              <Loader2 className="mb-4 h-12 w-12 animate-spin text-primary" />
               <p className="text-sm text-muted-foreground">Parsing your statement...</p>
             </>
           ) : (
             <>
-              <Upload className="mb-4 h-12 w-12 text-indigo-400" />
+              <Upload className="mb-4 h-12 w-12 text-primary" />
               <p className="mb-1 text-lg font-medium">Drop your statement here</p>
               <p className="mb-4 text-sm text-muted-foreground">
                 PDF or text — processed entirely in your browser
               </p>
-                <Button
-                  variant="secondary"
-                  className="cursor-pointer"
-                  onClick={() => {
-                    const input = document.getElementById("file-input") as HTMLInputElement;
-                    input?.click();
-                  }}
-                >
-                  Browse files
-                </Button>
-                <input
-                  id="file-input"
-                  type="file"
-                  accept=".pdf,.txt,text/plain,application/pdf"
-                  className="hidden"
-                  onChange={handleFileInput}
-                />
+              <Button
+                variant="secondary"
+                className="cursor-pointer"
+                onClick={() => {
+                  const input = document.getElementById("file-input") as HTMLInputElement;
+                  input?.click();
+                }}
+              >
+                Browse files
+              </Button>
+              <input
+                id="file-input"
+                type="file"
+                accept=".pdf,.txt,text/plain,application/pdf"
+                className="hidden"
+                onChange={handleFileInput}
+              />
             </>
           )}
         </div>
       </TabsContent>
 
       <TabsContent value="paste" className="mt-4 space-y-4">
-        <div className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/5 p-4">
-          <FileText className="mt-0.5 h-5 w-5 shrink-0 text-indigo-400" />
+        <div className="flex items-start gap-3 rounded-lg border border-border bg-muted/50 p-4">
+          <FileText className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
           <p className="text-sm text-muted-foreground">
             Copy the full text from your mobile money statement PDF and paste it below.
             v1 is tested on Airtel Money; other formats may work if the layout is similar.
@@ -98,7 +98,7 @@ export function FileUploader({ onFileSelect, onTextSubmit, isLoading }: FileUplo
         </div>
         <Textarea
           placeholder="Paste statement text here..."
-          className="min-h-[200px] resize-y bg-white/5 font-mono text-sm"
+          className="min-h-[200px] resize-y bg-background font-mono text-sm"
           value={pastedText}
           onChange={(e) => setPastedText(e.target.value)}
           disabled={isLoading}
@@ -106,7 +106,7 @@ export function FileUploader({ onFileSelect, onTextSubmit, isLoading }: FileUplo
         <Button
           onClick={() => onTextSubmit(pastedText)}
           disabled={!pastedText.trim() || isLoading}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500"
+          className="w-full"
         >
           {isLoading ? (
             <>

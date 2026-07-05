@@ -24,19 +24,19 @@ const SEVERITY_STYLES: Record<
   { border: string; bg: string; icon: string }
 > = {
   critical: {
-    border: "border-red-500/30",
-    bg: "bg-red-500/10",
-    icon: "text-red-400",
+    border: "border-destructive/30",
+    bg: "bg-destructive/10",
+    icon: "text-destructive",
   },
   warning: {
     border: "border-amber-500/30",
     bg: "bg-amber-500/10",
-    icon: "text-amber-400",
+    icon: "text-amber-600 dark:text-amber-400",
   },
   info: {
-    border: "border-indigo-500/30",
-    bg: "bg-indigo-500/10",
-    icon: "text-indigo-400",
+    border: "border-primary/30",
+    bg: "bg-primary/10",
+    icon: "text-primary",
   },
 };
 
@@ -56,7 +56,7 @@ export function InsightCards({ insights }: InsightCardsProps) {
           return (
             <Card
               key={insight.type + insight.title}
-              className={`border ${styles.border} ${styles.bg} backdrop-blur-sm`}
+              className={`border ${styles.border} ${styles.bg}`}
             >
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-sm font-semibold">

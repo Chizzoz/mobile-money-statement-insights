@@ -13,7 +13,7 @@ export function DashboardSkeleton() {
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Card key={i} className="border-white/10 bg-white/5">
+          <Card key={i}>
             <CardHeader>
               <Skeleton className="h-5 w-40" />
             </CardHeader>
@@ -37,7 +37,7 @@ export function ChartCard({
   action?: React.ReactNode;
 }) {
   return (
-    <Card className="border-white/10 bg-white/5 backdrop-blur-sm">
+    <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-base font-semibold">{title}</CardTitle>
         {action}

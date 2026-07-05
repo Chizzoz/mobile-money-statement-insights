@@ -2,6 +2,7 @@
 
 import { DashboardView } from "@/components/Dashboard/DashboardView";
 import { DashboardSkeleton } from "@/components/Dashboard/DashboardGrid";
+import { ThemeToggle } from "@/components/Theme/ThemeToggle";
 import { FileUploader } from "@/components/Uploader/FileUploader";
 import { analyzeStatement } from "@/lib/analyzers/aggregator";
 import { parsePdfFile } from "@/lib/parsers/pdfParser";
@@ -55,25 +56,25 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero header */}
-      <header className="border-b border-white/10 bg-gradient-to-r from-indigo-950/80 via-slate-950 to-purple-950/80">
+      <header className="border-b border-border bg-card">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="mb-2 flex items-center gap-2">
-                <Sparkles className="h-6 w-6 text-indigo-400" />
-                <h1 className="bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-3xl font-bold text-transparent">
-                  MoMo Insights
-                </h1>
+                <Sparkles className="h-6 w-6 text-primary" />
+                <h1 className="text-3xl font-bold text-foreground">MoMo Insights</h1>
               </div>
               <p className="max-w-xl text-muted-foreground">
                 Upload your mobile money statement to visualize spending, uncover patterns,
                 and get personalized financial advice.
               </p>
             </div>
-            <div className="flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-sm text-green-300">
-              <Lock className="h-4 w-4" />
-              100% private — processed locally
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-2 text-sm text-muted-foreground">
+                <Lock className="h-4 w-4 text-primary" />
+                100% private — processed locally
+              </div>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -88,7 +89,7 @@ export default function HomePage() {
               isLoading={false}
             />
             {error && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
+              <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -98,7 +99,7 @@ export default function HomePage() {
           </div>
         ) : status === "loading" ? (
           <div className="space-y-6">
-            <p className="text-center text-sm text-indigo-300">{loadingMessage}</p>
+            <p className="text-center text-sm text-primary">{loadingMessage}</p>
             <DashboardSkeleton />
           </div>
         ) : analysis ? (
